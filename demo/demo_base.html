@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>报价单demo</title>
+	<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="vendor/bootstrap-treeview-1.2.0/dist/bootstrap-treeview.min.css">
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.body {
+			position: absolute;
+			top: 51px;
+			width: 100%;
+			height: calc(100% - 50px);
+		}
+		.left-bar {
+			float: left;
+			width: 300px;
+			height: 100%;
+			/*background: #555;*/
+		}
+		.price {
+			float: left;
+			width: calc(100% - 300px);
+			height: calc(100% - 70px);
+		}
+		.foot {
+			float: left;
+			width: calc(100% - 300px);
+			height: 70px;
+			/*background: #333;*/
+		}
+		.to-up, .to-down {
+			/*background: #eee;*/
+			float: left;
+			width: 50%;
+			height: 100%;
+		}
+
+		/* 树样式修正 */
+		.treeview .list-group-item {
+			border-radius: 0px;
+		}
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-default no-radius no-margin" role="navigation">
+		<div class="navbar-header" style="width: 299px; border-right: 1px solid #ddd;">
+			<!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+				<span class="sr-only">切换导航</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button> -->
+			<a class="navbar-brand" href="#">
+				<span>
+					<!-- <img src="assets/img/logo2.gif" style="height: 50px; width: 50px"/> -->
+					<i class="fa fa-star"></i>
+				</span>
+				&nbsp;
+				<span>报价单生成</span>
+			</a>
+		</div>
+		<div>
+			<!-- <ul class="nav navbar-nav collapse navbar-collapse" id="navbar-collapse">
+				<li class="active"><a href="#">欢迎</a></li>
+				<li><a href="#">荣誉资质</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						帮扶案例
+						<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="#">jmeter</a></li>
+						<li><a href="#">EJB</a></li>
+						<li><a href="#">Jasper Report</a></li>
+						<li class="divider"></li>
+						<li><a href="#">Android</a></li>
+						<li class="divider"></li>
+						<li><a href="#">iOS</a></li>
+					</ul>
+				</li>
+			</ul> -->
+			<!-- <div class="nav collapse navbar-collapse pull-right" style="width: 190px;">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="站内查找">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button">
+							<i class="fa fa-search"></i>
+						</button>
+					</span>
+				</div>
+				/input-group
+			</div> -->
+		</div>
+	</nav>
+	<div class="body">
+		<div class="left-bar">
+			<div id="tree"></div>
+		</div>
+		<div class="price">
+			<div class="to-up"></div>
+			<div class="to-down"></div>
+		</div>
+		<div class="foot"></div>
+	</div>
+
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/bootstrap-treeview-1.2.0/dist/bootstrap-treeview.min.js"></script>
+
+	<script>
+		var treeData = [
+			{
+				text: "Parent 1",
+				nodes: [
+					{
+						text: "Child 1",
+						nodes: [
+							{
+								text: "Grandchild 1"
+							},
+							{
+								text: "Grandchild 2"
+							}
+						]
+					},
+					{
+						text: "Child 2"
+					}
+				]
+			},
+			{
+				text: "Parent 2"
+			},
+			{
+				text: "Parent 3"
+			},
+			{
+				text: "Parent 4"
+			},
+			{
+				text: "Parent 5"
+			}
+		];
+
+		$('#tree').treeview({data: treeData});
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vendor/vue/vue.min.js"></script>
+	<script src="assets/components/vue-drag-tree.vue"></script>
+	<style>
+		.done {
+			text-decoration: line-through;
+		}
+		.hide {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	
+	<script>
+		// import Vue from 'vue'
+		// import VueDragTree from 'vue-drag-tree'
+
+		Vue.component('vue-drag-tree', VueDragTree);
+
+		var app = new Vue({
+			el: '#todoList',
+			data: {
+				message: 'hello vue',
+				todos: [
+					{ text: '学习JavaScript', done: true },
+					{ text: '装13', hidden: true},
+					{ text: '学习Vue'},
+					{ text: '整个牛项目'}
+				]
+			},
+			methods: {
+				add: function() {
+					this.todos.push({ text: this.message });
+					this.message = "";
+				},
+				del: function() {
+					this.todos = this.todos.filter((todo) => { return !todo.done; });
+				}
+			},
+			computed: {
+				// 注意：computed中出现的变量不要在data里声明
+				selectCount: function() {
+					return this.todos.filter((val) => { return val.done == true; }).length;
+				}
+			}
+		});
+		
+		var vm = new Vue({
+			el: '#demo',
+			data: {
+				firstName: 'Foo',
+				lastName: 'Bar'
+			},
+			computed: {
+				fullName: function () {
+					return this.firstName + ' ' + this.lastName
+				}
+			}
+		});
+	</script>
+</body>
+</html>

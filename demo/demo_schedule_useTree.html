@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>报价单demo</title>
+	<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="vendor/bootstrap-treeview-1.2.0/dist/bootstrap-treeview.min.css">
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.body {
+			position: absolute;
+			top: 51px;
+			width: 100%;
+			height: calc(100% - 51px);
+		}
+		.left-bar {
+			float: left;
+			width: 300px;
+			height: 100%;
+			box-sizing: content-box;
+			border-right: 1px solid #ddd;
+			/*background: #555;*/
+		}
+		.content {
+			float: left;
+			width: calc(100% - 301px);
+			height: calc(100% - 70px);
+		}
+		.foot {
+			float: left;
+			width: calc(100% - 301px);
+			height: 70px;
+			background: #333;
+			color: #eee;
+		}
+		.to-up, .to-down {
+			/*background: #eee;*/
+			float: left;
+			width: 50%;
+			height: 100%;
+		}
+
+		/* 树样式修正 */
+		.treeview .list-group-item {
+			border-radius: 0px;
+			border-right-width: 0px;
+		}
+
+		/* 当前样式修正 */
+		.navbar {
+			border-radius: 0px;
+		}
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-default no-radius no-margin" role="navigation">
+		<div class="navbar-header" style="width: 300px; border-right: 1px solid #ddd;">
+			<!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+				<span class="sr-only">切换导航</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button> -->
+			<a class="navbar-brand" href="#">
+				<span>
+					<!-- <img src="assets/img/logo2.gif" style="height: 50px; width: 50px"/> -->
+					<i class="fa fa-star"></i>
+				</span>
+				&nbsp;
+				<span>Marta Demo Project</span>
+			</a>
+		</div>
+		<div>
+			<div class="navbar-header">
+				<span class="navbar-brand">
+					<i class="fa fa-angle-double-right"></i>
+					&nbsp;
+					Schedule
+				</span>
+			</div>
+			<!-- <ul class="nav navbar-nav collapse navbar-collapse" id="navbar-collapse">
+				<li class="active"><a href="#">欢迎</a></li>
+				<li><a href="#">荣誉资质</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						帮扶案例
+						<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="#">jmeter</a></li>
+						<li><a href="#">EJB</a></li>
+						<li><a href="#">Jasper Report</a></li>
+						<li class="divider"></li>
+						<li><a href="#">Android</a></li>
+						<li class="divider"></li>
+						<li><a href="#">iOS</a></li>
+					</ul>
+				</li>
+			</ul> -->
+			<!-- <div class="nav collapse navbar-collapse pull-right" style="width: 190px;">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="站内查找">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button">
+							<i class="fa fa-search"></i>
+						</button>
+					</span>
+				</div>
+				/input-group
+			</div> -->
+		</div>
+	</nav>
+	<div class="body">
+
+		<!-- 左侧菜单 -->
+		<div class="left-bar">
+			<div id="tree"></div>
+			
+		</div>
+
+		<!-- 内容 -->
+		<div class="content">
+			<div class="cards-plan">
+				
+			</div>
+		</div>
+
+		<!-- 底部信息 -->
+		<div class="foot">
+			-- FOOTER --
+		</div>
+	</div>
+
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/bootstrap-treeview-1.2.0/dist/bootstrap-treeview.min.js"></script>
+
+	<script>
+		var myData = [
+			{
+				text: "City",
+				data: {
+					value: '0',
+					cn: '城市'
+				},
+				nodes: [
+					{
+						text: "Beijing",
+						data: {
+							value: '1',
+							cn: '北京市'
+						},
+						nodes: [
+							{
+								text: "Fengtai",
+								data: {
+									value: '2',
+									cn: '丰台区'
+								}
+							},
+							{
+								text: "Tongzhou",
+								data: {
+									value: '3',
+									cn: '通州区'
+								}
+							}
+						]
+					},
+					{
+						text: "Tianjin",
+						data: {
+							value: '4',
+							cn: '天津市'
+						},
+						nodes: [
+							{
+								text: "Xiqing",
+								data: {
+									value: '5',
+									cn: '西青区'
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				text: "Parent 2"
+			},
+			{
+				text: "Parent 3"
+			},
+			{
+				text: "Parent 4"
+			},
+			{
+				text: "Parent 5"
+			}
+		];
+
+		// 将自定义拓展的配置数据变成bootstrap-treeview专用的数据格式
+		function trans2TreeData(nodesData) {
+			if ([undefined, null, '', false, []].indexOf(nodesData) != -1) {
+				return undefined;
+			}
+			var transedData = [];
+
+			for (var i = 0; i < nodesData.length; i++) {
+				var nodeData = nodesData[i];
+
+				// 扩展text，增加属性
+				var $node = $('<span class="tree-item">' + nodeData.text + '</span>').attr(nodeData.data || {});
+				var newData = $.extend({}, nodeData, {text: $node});
+				delete newData.data;
+
+				newData.nodes = trans2TreeData(newData.nodes);
+				if (newData.nodes === undefined) {
+					delete newData.nodes;
+				}
+
+				transedData.push(newData);
+			}
+
+			return transedData;
+		}
+
+		var treeData = trans2TreeData(myData);
+
+		$('#tree').treeview({data: treeData});
+		
+	</script>
+</body>
+</html>

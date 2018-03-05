@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>报价单demo</title>
+	<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="vendor/bootstrap-treeview-1.2.0/dist/bootstrap-treeview.min.css">
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.body {
+			position: absolute;
+			top: 51px;
+			width: 100%;
+			height: calc(100% - 51px);
+		}
+		.left-bar {
+			float: left;
+			width: 300px;
+			height: 100%;
+			box-sizing: content-box;
+			border-right: 1px solid #ddd;
+			/*background: #555;*/
+		}
+		.menu {
+			padding-left: 20px;
+			border-bottom: 1px solid #ddd;
+		}
+		.menu h4 {
+			margin-left: -20px;
+			padding-left: 20px;
+			background: #eee;
+		}
+		.content {
+			float: left;
+			width: calc(100% - 301px);
+			/*height: calc(100% - 30px);*/
+			height: 100%;
+			overflow-y: auto;
+		}
+		.foot {
+			float: left;
+			width: calc(100% - 301px);
+			height: 30px;
+			background: #333;
+			color: #eee;
+		}
+		.to-up, .to-down {
+			/*background: #eee;*/
+			float: left;
+			width: 50%;
+			height: 100%;
+		}
+
+		/* 树样式修正 */
+		.treeview .list-group-item {
+			border-radius: 0px;
+			border-right-width: 0px;
+		}
+
+		/* 当前样式修正 */
+		.navbar {
+			border-radius: 0px;
+		}
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-default no-radius no-margin" role="navigation">
+		<div class="navbar-header" style="width: 300px; border-right: 1px solid #ddd;">
+			<!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+				<span class="sr-only">切换导航</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button> -->
+			<a class="navbar-brand" href="#">
+				<span>
+					<!-- <img src="assets/img/console.logo2.gif" style="height: 50px; width: 50px"/> -->
+					<i class="fa fa-star"></i>
+				</span>
+				&nbsp;
+				<span>Marta Demo Project</span>
+			</a>
+		</div>
+		<div>
+			<div class="navbar-header">
+				<span class="navbar-brand">
+					<i class="fa fa-angle-double-right"></i>
+					&nbsp;
+					Schedule
+				</span>
+			</div>
+			<!-- <ul class="nav navbar-nav collapse navbar-collapse" id="navbar-collapse">
+				<li class="active"><a href="#">欢迎</a></li>
+				<li><a href="#">荣誉资质</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						帮扶案例
+						<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="#">jmeter</a></li>
+						<li><a href="#">EJB</a></li>
+						<li><a href="#">Jasper Report</a></li>
+						<li class="divider"></li>
+						<li><a href="#">Android</a></li>
+						<li class="divider"></li>
+						<li><a href="#">iOS</a></li>
+					</ul>
+				</li>
+			</ul> -->
+			<!-- <div class="nav collapse navbar-collapse pull-right" style="width: 190px;">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="站内查找">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button">
+							<i class="fa fa-search"></i>
+						</button>
+					</span>
+				</div>
+				/input-group
+			</div> -->
+		</div>
+	</nav>
+	<div class="body">
+
+		<!-- 左侧菜单 -->
+		<div class="left-bar">
+			<!-- <div id="tree"></div> -->
+			<div class="menu city">
+				<h4>请拖选城市</h4>
+				<ul data-drag-type="c">
+					<li data-value="c01">北京</li>
+					<li data-value="c02">天津</li>
+					<li data-value="c03">上海</li>
+				</ul>
+			</div>
+			<div class="menu kesiki">
+				<h4>请拖选景点</h4>
+				<ul data-drag-type="k">
+					<li data-city="c01" data-value="k01">天安门</li>
+					<li data-city="c01" data-value="k02">北海</li>
+					<li data-city="c01" data-value="k03">景山</li>
+
+					<li data-city="c02" data-value="k04">天津之眼</li>
+					<li data-city="c02" data-value="k05">动物园</li>
+
+					<li data-city="c03" data-value="k06">景点1</li>
+					<li data-city="c03" data-value="k07">景点2</li>
+					<li data-city="c03" data-value="k08">景点3 </li>
+				</ul>
+			</div>
+			<div class="menu restaurant">
+				<h4>请拖选酒店</h4>
+				<ul data-drag-type="r">
+					<li data-city="c01" data-value="r01">北京大饭店</li>
+					<li data-city="c01" data-value="r02">全聚德</li>
+					<li data-city="c01" data-value="r03">北海串吧</li>
+
+					<li data-city="c02" data-value="r05">虾吃虾涮</li>
+					<li data-city="c02" data-value="r06">e麻e辣</li>
+
+					<li data-city="c03" data-value="r07">饭店1</li>
+					<li data-city="c03" data-value="r08">饭店2</li>
+					<li data-city="c03" data-value="r09">饭店3 </li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- 内容 -->
+		<div class="content drag-abort">
+			<div class="cards-plan">
+				
+			</div>
+		</div>
+
+		<!-- 底部信息 -->
+		<!-- <div class="foot">
+			-- FOOTER --
+		</div> -->
+	</div>
+
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/bootstrap-treeview-1.2.0/dist/bootstrap-treeview.min.js"></script>
+
+	<style>
+		.card {
+			border: 3px solid #ddd;
+			padding: 10px;
+			/*border-radius: 5px;*/
+			/*box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2);*/
+			min-height: 500px;
+			width: 300px;
+			margin: 30px;
+		}
+		.card-title {
+			padding-bottom: 5px;
+			/*border-bottom: 1px solid #ddd;*/
+		}
+		.del-btn {
+			padding-right: 5px;
+		}
+		.card-content .droppable {
+			border: 2px dashed #eee;
+			min-height: 100px;
+			margin-bottom: 10px;
+			padding-bottom: 10px;
+		}
+	</style>
+	<script>
+		$.fn.cardsPlan = function(_opt) {
+			var that = this;
+			var default_opt = {
+				cardTemplate:
+					'<div class="card">' +
+						'<div class="card-title">' +
+							'<span>TITLE</span>' +
+							'<span class="del-btn pull-right"><i class="fa fa-close"></i></span>' +
+						'</div>' +
+						'<div class="card-content">CONTENT</div>' +
+						'<div class="card-bottom">' +
+							'BOTTOM' +
+						'</div>' +
+					'</div>',
+				addTemplate:
+					'<div class="card">' +
+						'<div class="add-btn"><i class="fa fa-plus"></i></div>' +
+					'</div>',
+				leftBtnTemplate:
+					'<div class="left-btn"><i class="fa fa-angle-left"></i></div>',
+				rightBtnTemplate:
+					'<div class="right-btn"><i class="fa fa-angle-right"></i></div>'
+			};
+			var opt = $.extend({}, default_opt, _opt);
+
+			$.each(that, function(_idx) {
+				var $this = $(that[_idx]);
+
+				$this.append($(opt.cardTemplate));
+			});
+		}
+
+		$('.cards-plan').cardsPlan({
+			cardTemplate:
+				'<div class="card">' +
+					'<div class="card-title">' +
+						'<span>TITLE</span>' +
+						'<span class="del-btn pull-right"><i class="fa fa-close"></i></span>' +
+					'</div>' +
+					'<div class="card-content">' +
+						'<div class="droppable" data-drop-type="c">' +
+							'<h5>城市</h5>' +
+							'<div class="drop-content"></div>' +
+						'</div>' +
+						'<div class="droppable" data-drop-type="k">' +
+							'<h5>景点(n)</h5>' +
+							'<div class="drop-content"></div>' +
+						'</div>' +
+						'<div class="droppable" data-drop-type="r">' +
+							'<h5>酒店</h5>' +
+							'<div class="drop-content"></div>' +
+						'</div>' +
+					'</div>' +
+				'</div>'
+		});
+
+	</script>
+
+
+
+
+	<!--
+	
+		// /////////////////////////////////////////////////////////////////////////////
+		// 拖拽
+		// /////////////////////////////////////////////////////////////////////////////
+
+	-->
+	<style>
+		.next-shining {
+			height: calc(100%);
+			animation: next-shining_border 1s infinite ease-in-out;
+			animation-fill-mode: both;
+		}
+		@keyframes next-shining_border{
+			50% {
+				background: rgba(255, 255, 0, 0.5);
+			}
+		}
+		.active-shining {
+			height: calc(100%);
+			animation: active-shining_border 0.7s infinite ease-in-out;
+			animation-fill-mode: both;
+		}
+		@keyframes active-shining_border{
+			50% {
+				background: rgba(0, 255, 0, 0.5);
+			}
+		}
+		.ng-shining {
+			height: calc(100%);
+			animation: ng-shining_border 1.7s infinite ease-in-out;
+			animation-fill-mode: both;
+		}
+		@keyframes ng-shining_border{
+			10% {
+				background: rgba(255, 0, 0, 0.2);
+			}
+			50% {
+				background: rgba(255, 0, 0, 0.2);
+			}
+		}
+	</style>
+	<script>
+		
+		// 初始化拖拽
+		function drag_init() {
+			// 可拖拽项目
+			var $drag_items = $('[data-drag-type] li');
+			$.each($drag_items, function(idx){
+				$(this).attr('id', 'drag-item-' + idx);
+				$(this).attr('draggable', 'true');
+				$(this).on('dragstart', dragStart);
+				$(this).on('dragend', dragEnd);
+				// $(this).on('dblclick', config);
+			});
+
+			// 放弃drop的绑定
+			$('.drag-abort').on('dragover', dragOver).on('drop', drop);
+		}
+
+		// 拖拽开始
+		function dragStart() {
+			console.log('dragStart');
+			var ev = event;
+
+			// 随拖拽准备的数据
+			var type = $(ev.target).parent().attr('data-drag-type');
+			ev.dataTransfer.setData("id", ev.target.id);
+			ev.dataTransfer.setData("value", ev.target.getAttribute('data-value'));
+			ev.dataTransfer.setData("type", type);
+
+			// 可放置项目
+			var $containers = $('[data-drop-type=' + type + ']');
+			$.each($containers, function(){
+				$(this).on('dragover', dragOver);
+				$(this).on('drop', drop);
+			});
+
+			// 允许放置的容器开始闪烁
+			$('[data-drop-type=' + type + ']').addClass('next-shining');
+		}
+
+		// 扔下
+		function drop(evnet) {
+			console.log('drop');
+			var ev = event;
+			ev.preventDefault();
+			ev.stopPropagation();	// 取消事件冒泡，嵌套元素之间事件监听不会互相影响
+			var origin_id = ev.dataTransfer.getData("id");
+			var value = ev.dataTransfer.getData('value');
+			var type = ev.dataTransfer.getData('type');
+
+			if ($(this).hasClass('active-shining')) {
+				$(this).find('.drop-content').append($('<div><i class="fa fa-circle"></i>[' + type + ']->' + value + 'TODO: 转换成可读信息</div>'));
+				$('[data-drag-type=' + type + '] [data-value=' + value + ']').hide();
+			}
+		}
+
+		// 拖拽结束
+		function dragEnd() {
+			console.log('dragEnd');
+			var ev = event;
+
+			$('.next-shining').removeClass('next-shining');
+			$('.active-shining').removeClass('active-shining');
+			$('.ng-shining').removeClass('ng-shining');
+			$('[data-drop-type]').off('dragover').off('drop');
+		}
+
+		// 拖拽经过
+		function dragOver(event) {
+			var ev = event;
+			ev.preventDefault();
+			ev.stopPropagation();	// 取消事件冒泡，嵌套元素之间事件监听不会互相影响
+			var $this = $(this);	// 一定要用this，否则event中会有一大串对象，根本不是想要的那个对象
+			console.log('dragover');
+			if ($this.hasClass('drag-abort')) {
+				$('.active-shining').removeClass('active-shining');
+				$this.addClass('ng-shining');
+			} else {
+				$this.addClass('active-shining');
+				$('.ng-shining').removeClass('ng-shining');
+			}
+		}
+
+		drag_init();
+	</script>
+</body>
+</html>
