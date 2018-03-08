@@ -175,7 +175,6 @@
 		<!-- 内容 -->
 		<div class="content drag-abort">
 			<div class="cards-plan">
-				
 			</div>
 		</div>
 
@@ -190,18 +189,36 @@
 	<script src="vendor/bootstrap-treeview-1.2.0/dist/bootstrap-treeview.min.js"></script>
 
 	<style>
+		.cards-plan {
+			height: 100%;
+			width: 100%;
+			position: absolute;
+		}
+		.cards-rail {
+			background: #fdd;
+			white-space: nowrap;
+			padding-top: 100px;
+			height: 100%;
+			vertical-align: top;
+			display: inline-block;
+		}
 		.card {
 			border: 3px solid #ddd;
 			padding: 10px;
 			/*border-radius: 5px;*/
 			/*box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2);*/
-			min-height: 500px;
-			width: 300px;
-			margin: 30px;
+			height: 600px;
+			width: 400px;
+			margin: 0 30px;
+			vertical-align: top;
+			display: inline-block;
 		}
 		.card-title {
 			padding-bottom: 5px;
-			/*border-bottom: 1px solid #ddd;*/
+			line-height: initial;
+		}
+		.card-content {
+			line-height: initial;
 		}
 		.del-btn {
 			padding-right: 5px;
@@ -212,11 +229,34 @@
 			margin-bottom: 10px;
 			padding-bottom: 10px;
 		}
+
+		.left-btn, .right-btn {
+			height: 100%;
+			background: #dfd;
+			width: 40px;
+			font-size: 34px;
+			display: inline-block;
+			text-align: center;
+			position: absolute;
+		}
+		.left-btn i, .right-btn i {
+			position: absolute;
+    		top: calc(50% - 20px);
+		}
+		.left-btn {
+			left: 0;
+		}
+		.right-btn {
+			right: 0;
+		}
 	</style>
 	<script>
 		$.fn.cardsPlan = function(_opt) {
 			var that = this;
 			var default_opt = {
+				cardsRailTemplate:
+					'<div class="cards-rail">' +
+					'</div>',
 				cardTemplate:
 					'<div class="card">' +
 						'<div class="card-title">' +
@@ -230,7 +270,10 @@
 					'</div>',
 				addTemplate:
 					'<div class="card">' +
-						'<div class="add-btn"><i class="fa fa-plus"></i></div>' +
+						'<div class="card-title">' +
+							'<span>New</span>' +
+							'<span class="del-btn pull-right"><i class="fa fa-plus"></i></span>' +
+						'</div>' +
 					'</div>',
 				leftBtnTemplate:
 					'<div class="left-btn"><i class="fa fa-angle-left"></i></div>',
@@ -242,7 +285,15 @@
 			$.each(that, function(_idx) {
 				var $this = $(that[_idx]);
 
-				$this.append($(opt.cardTemplate));
+				// 针对单体的对象做的操作
+
+				var $cardsRail = $(opt.cardsRailTemplate);
+				$this.append($cardsRail);
+				$cardsRail.append($(opt.cardTemplate));
+				$cardsRail.append($(opt.addTemplate));
+
+				$this.append($(opt.leftBtnTemplate));
+				$this.append($(opt.rightBtnTemplate));
 			});
 		}
 
