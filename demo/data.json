@@ -1,0 +1,101 @@
+{
+	"city": {
+		"beijing": {
+			"cn": "北京"
+		},
+		"tianjin": {
+			"cn": "天津"
+		},
+		"shanghai": {
+			"cn": "上海"
+		}
+	},
+	"kesiki": {
+		"tiananmen": {
+			"cn": "天安门"
+		},
+		"beihai": {
+			"cn": "北海"
+		},
+		"jingshan": {
+			"cn": "景山"
+		},
+		"tianjinzhiyan": {
+			"cn": "天津之眼"
+		},
+		"dongwuyuan": {
+			"cn": "动物园"
+		},
+		"binghairuanjianyuan": {
+			"cn": "滨海软件园"
+		},
+		"jd1": {
+			"cn": "景点1"
+		},
+		"jd2": {
+			"cn": "景点2"
+		},
+		"jd3": {
+			"cn": "景点3"
+		}
+	},
+	"restaurant": {
+		"beijingdafandian": {
+			"cn": "北京大饭店"
+		},
+		"quanjude": {
+			"cn": "全聚德"
+		},
+		"beihaichuanba": {
+			"cn": "北海串吧"
+		},
+		"xiachixiashuan": {
+			"cn": "虾吃虾涮"
+		},
+		"emaela": {
+			"cn": "e麻e辣"
+		},
+		"fd1": {
+			"cn": "饭店1"
+		},
+		"fd2": {
+			"cn": "饭店2"
+		},
+		"fd3": {
+			"cn": "饭店3"
+		}
+	},
+	"kesikiMap": {
+		"beijing": [
+			"tiananmen",
+			"beihai",
+			"jingshan"
+		],
+		"tianjin": [
+			"tianjinzhiyan",
+			"dongwuyuan",
+			"binhairuanjianyuan"
+		],
+		"shanghai": [
+			"jd1",
+			"jd2",
+			"jd3"
+		]
+	},
+	"restaurantMap": {
+		"beijing": [
+			"beijingdafandian",
+			"quanjude",
+			"beihaichuanba"
+		],
+		"tianjin": [
+			"xiachixiashuan",
+			"emaela"
+		],
+		"shanghai": [
+			"fd1",
+			"fd2",
+			"fd3"
+		]
+	}
+}

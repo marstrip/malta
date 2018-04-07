@@ -12,6 +12,13 @@
 		* {
 			margin: 0;
 			padding: 0;
+			-webkit-user-select:none;
+			-moz-user-select:none;
+			-ms-user-select:none;
+			user-select:none;
+		}
+		:focus {
+			outline: -webkit-focus-ring-color auto 0px;
 		}
 		.body {
 			position: absolute;
@@ -38,6 +45,9 @@
 			margin-left: -20px;
 			padding-left: 20px;
 			background: #eee;
+		}
+		.menu ul li:hover {
+			background: rgba(0,0,0,0.05);
 		}
 		.content {
 			float: left;
@@ -81,40 +91,17 @@
 			<div class="psb-content">
 				<div class="menu city">
 					<h4>请拖选城市</h4>
-					<ul data-drag-type="c">
-						<li data-value="c01">北京</li>
-						<li data-value="c02">天津</li>
-						<li data-value="c03">上海</li>
+					<ul id="city" data-drag-type="c">
 					</ul>
 				</div>
 				<div class="menu kesiki">
 					<h4>请拖选景点</h4>
-					<ul data-drag-type="k">
-						<li data-city="c01" data-value="k01">天安门</li>
-						<li data-city="c01" data-value="k02">北海</li>
-						<li data-city="c01" data-value="k03">景山</li>
-
-						<li data-city="c02" data-value="k04">天津之眼</li>
-						<li data-city="c02" data-value="k05">动物园</li>
-
-						<li data-city="c03" data-value="k06">景点1</li>
-						<li data-city="c03" data-value="k07">景点2</li>
-						<li data-city="c03" data-value="k08">景点3 </li>
+					<ul id="kesiki" data-drag-type="k">
 					</ul>
 				</div>
 				<div class="menu restaurant">
 					<h4>请拖选酒店</h4>
-					<ul data-drag-type="r">
-						<li data-city="c01" data-value="r01">北京大饭店</li>
-						<li data-city="c01" data-value="r02">全聚德</li>
-						<li data-city="c01" data-value="r03">北海串吧</li>
-
-						<li data-city="c02" data-value="r05">虾吃虾涮</li>
-						<li data-city="c02" data-value="r06">e麻e辣</li>
-
-						<li data-city="c03" data-value="r07">饭店1</li>
-						<li data-city="c03" data-value="r08">饭店2</li>
-						<li data-city="c03" data-value="r09">饭店3 </li>
+					<ul id="restaurant" data-drag-type="r">
 					</ul>
 				</div>
 			</div>
@@ -125,46 +112,81 @@
 			<div class="cards-plan">
 				<div class="cards-rail">
 					<div class="cards" style="left: 0px;">
-						<div class="card">
+						<div class="card now">
 							<div class="card-title">
-								<span>TITLE</span>
+								<span>2018/04/07 行程</span>
 								<span class="del-btn pull-right">
 									<i class="fa fa-close"></i>
 								</span>
 							</div>
 							<div class="psb-container psb-here card-content">
 								<div class="psb-content">
+									<h5>城市</h5>
 									<div class="droppable" data-drop-type="c">
-										<h5>城市</h5>
 										<div class="drop-content">
 										</div>
+										<input type="text" name="select_city">
 									</div>
+									<h5>景点(n)</h5>
 									<div class="droppable" data-drop-type="k">
-										<h5>景点(n)</h5>
 										<div class="drop-content">
 										</div>
+										<input type="text" name="select_kesiki">
 									</div>
+									<h5>酒店</h5>
 									<div class="droppable" data-drop-type="r">
-										<h5>酒店</h5>
 										<div class="drop-content">
 										</div>
+										<input type="text" name="select_restaurant">
 									</div>
 								</div>
 							</div>
 						</div>
 
+
 						<div class="card">
+							<div class="card-title">
+								<span>2018/04/07 行程</span>
+								<span class="del-btn pull-right">
+									<i class="fa fa-close"></i>
+								</span>
+							</div>
+							<div class="psb-container psb-here card-content">
+								<div class="psb-content">
+									<h5>城市</h5>
+									<div class="droppable" data-drop-type="c">
+										<div class="drop-content">
+										</div>
+										<input type="text" name="select_city">
+									</div>
+									<h5>景点(n)</h5>
+									<div class="droppable" data-drop-type="k">
+										<div class="drop-content">
+										</div>
+										<input type="text" name="select_kesiki">
+									</div>
+									<h5>酒店</h5>
+									<div class="droppable" data-drop-type="r">
+										<div class="drop-content">
+										</div>
+										<input type="text" name="select_restaurant">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- <div class="card">
 							<div class="card-title">
 								<span>New</span>
 								<span class="del-btn pull-right"><i class="fa fa-plus"></i></span>
 							</div>
-						</div>
+						</div> -->
 
 					</div><!-- end of .cards -->
 				</div>
 
-				<div class="left-btn"><i class="fa fa-angle-left"></i></div>
-				<div class="right-btn"><i class="fa fa-angle-right"></i></div>
+				<button class="left-btn"><i class="fa fa-angle-left"></i></button>
+				<button class="right-btn"><i class="fa fa-angle-right"></i></button>
 			</div>
 		</div>
 
@@ -183,7 +205,6 @@
 	<script src="vendor/jquery.perfect-scrollbar-1.3.0/dist/perfect-scrollbar.min.js"></script>
 
 	<style>
-		
 		.psb-container {
 			/* padding: 0px!important; */		/* PerfectScrollbar用，直接替换html的滚动条 */
 			width: 100%;
@@ -206,7 +227,7 @@
 			vertical-align: top;
 			display: inline-block;
 			padding-top: 7px;
-    		overflow-x: hidden;
+			overflow-x: hidden;
 		}
 		.cards {
 			display: inline;
@@ -215,16 +236,16 @@
 		}
 		.card {
 			border: 3px solid #ddd;
-		    /*padding: 10px;*/
-		    /* border-radius: 5px; */
-		    /* box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2); */
-		    height: 570px;
-		    width: 560px;
-		    /* margin: 0 30px; */
-		    vertical-align: top;
-		    display: inline-block;
-		    /*float: left;*/
-		    margin: 0 calc(50% - 280px);
+			/*padding: 10px;*/
+			/* border-radius: 5px; */
+			/* box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2); */
+			height: 570px;
+			width: 560px;
+			/* margin: 0 30px; */
+			vertical-align: top;
+			display: inline-block;
+			/*float: left;*/
+			margin: 0 calc(50% - 280px);
 		}
 		.card-title {
 			padding: 10px;
@@ -242,15 +263,27 @@
 		.card-content .droppable {
 			border: 2px dashed #eee;
 			min-height: 100px;
-			margin-bottom: 10px;
+			margin-bottom: 20px;
 			padding-bottom: 10px;
-			height: 200px;
+			/*padding: 10px;*/
+			/*height: 200px;*/
+		}
+		.drop-content {
+			display: inline;
+			white-space: normal;
+			word-break: break-all;
+		}
+		.drop-item {
+			margin: 10px;
+			width: 100px;
+			display: inline-block;
 		}
 
 		.left-btn,
 		.right-btn {
 			height: 100%;
-			/*background: #dfd;*/
+			background: transparent;
+			border-width: 0;
 			width: 40px;
 			font-size: 34px;
 			display: inline-block;
@@ -264,7 +297,7 @@
 		}
 		.left-btn i, .right-btn i {
 			position: absolute;
-    		top: calc(50% - 20px);
+			top: calc(50% - 20px);
 		}
 		.left-btn {
 			left: 0;
@@ -272,10 +305,151 @@
 		.right-btn {
 			right: 0;
 		}
+		.hide {
+			display: none;
+		}
 	</style>
+
+	<style>
+		.next-shining {
+			height: calc(100%);
+			animation: next-shining_border 1s infinite ease-in-out;
+			animation-fill-mode: both;
+		}
+		@keyframes next-shining_border{
+			50% {
+				background: rgba(255, 255, 0, 0.5);
+			}
+		}
+		.active-shining {
+			height: calc(100%);
+			animation: active-shining_border 0.7s infinite ease-in-out;
+			animation-fill-mode: both;
+		}
+		@keyframes active-shining_border{
+			50% {
+				background: rgba(0, 255, 0, 0.5);
+			}
+		}
+		.ng-shining {
+			height: calc(100%);
+			/*animation: ng-shining_border 1.7s infinite ease-in-out;*/
+			/*animation-fill-mode: both;*/
+		}
+		@keyframes ng-shining_border{
+			10% {
+				background: rgba(255, 0, 0, 0.2);
+			}
+			50% {
+				background: rgba(255, 0, 0, 0.2);
+			}
+		}
+	</style>
+
 	<script>
 		$(document).ready(function() {
 			console.log('ready');
+
+			var data = undefined;
+			$.ajax({
+				url: "data.json",
+				async: false,
+				success: function(d) {
+					data = d;
+				}
+			});
+
+			var $city = $('#city');
+			var $kesiki = $('#kesiki');
+			var $restaurant = $('#restaurant');
+
+			window.data_city = data['city'];			// TODO: 修改作用域
+			window.data_kesiki = data['kesiki'];			// TODO: 修改作用域
+			window.data_restaurant = data['restaurant'];			// TODO: 修改作用域
+			window.data_kesikiMap = data['kesikiMap'];			// TODO: 修改作用域
+			window.data_restaurantMap = data['restaurantMap'];			// TODO: 修改作用域
+
+			$.each(data_city, function(k) {
+				var cn = data_city[k].cn;
+				var $item = $('<li class="city-item" key="' + k + '">' + cn + '</li>')
+				$city.append($item);
+			});
+
+			$.each(data_kesiki, function(k) {
+				var cn = data_kesiki[k].cn;
+				var $item = $('<li class="kesiki-item" key="' + k + '">' + cn + '</li>')
+				$kesiki.append($item);
+			});
+
+			$.each(data_restaurant, function(k) {
+				var cn = data_restaurant[k].cn;
+				var $item = $('<li class="restaurant-item" key="' + k + '">' + cn + '</li>')
+				$restaurant.append($item);
+			});
+
+			function getValueList($target) {
+				return ($target.val() != "" ? $target.val().split(',') : []);
+			}
+
+			Object.prototype.listAdd = function(vList) {
+				for(var i = 0; i < vList.length; i++) {
+					this.push(vList[i]);
+				}
+			}
+
+			function leftUpdate() {
+				var key = 'city';
+				$('.' + key + '-item').each(function() {
+					var $item = $(this);
+					if (getValueList($('.now [name=select_' + key + ']')).indexOf($item.attr('key')) != -1) {
+						$item.addClass('hide');
+					} else {
+						$item.removeClass('hide');
+					}
+				});
+
+				var key = 'kesiki';
+				$('.' + key + '-item').each(function() {
+					var $item = $(this);
+
+					var selectCity = getValueList($('.now [name=select_city]'));
+					var allowList = [];
+					$.each(selectCity, function(idx) {
+						var c = selectCity[idx];
+						allowList.listAdd(data_kesikiMap[c]);
+					});
+
+					if (getValueList($('.now [name=select_' + key + ']')).indexOf($item.attr('key')) == -1 && allowList.indexOf($item.attr('key')) != -1) {
+						$item.removeClass('hide');
+					} else {
+						$item.addClass('hide');
+					}
+				});
+
+				var key = 'restaurant';
+				$('.' + key + '-item').each(function() {
+					var $item = $(this);
+
+					var selectCity = getValueList($('.now [name=select_city]'));
+					var allowList = [];
+					$.each(selectCity, function(idx) {
+						var c = selectCity[idx];
+						allowList.listAdd(data_restaurantMap[c]);
+					});
+
+					if (getValueList($('.now [name=select_' + key + ']')).indexOf($item.attr('key')) == -1 && allowList.indexOf($item.attr('key')) != -1) {
+						$item.removeClass('hide');
+					} else {
+						$item.addClass('hide');
+					}
+				});
+			}
+			// leftUpdate();
+
+			setInterval(leftUpdate, 1000);
+
+			// 拖拽初始化
+			drag_init();
 
 			var psbList = [];
 			$('.psb-here').each(function() {
@@ -290,21 +464,52 @@
 				});
 			});
 
-			$('.left-btn').on('click', function() {
-				var unitWidth = $('.cards-rail').width();
-				var leftNow = parseInt($('.cards').css('left').replace('px', '')) || 0;
-				$('.cards').css('left', (leftNow + unitWidth) + 'px');
-			});
+			function bindPageBtnEvent() {
+				$('.left-btn').on('click', function() {
+					// 更新now
+					var nowIndex = $('.cards .card').index($('.now'));
+					var nextIndex = nowIndex - 1;
+					if (nextIndex >= 0) {
+						var unitWidth = $('.cards-rail').width();
+						var leftNow = parseInt($('.cards').css('left').replace('px', '')) || 0;
+						$('.cards').css('left', (leftNow + unitWidth) + 'px');
+						
+						$('.now').removeClass('now');
+						$('.cards .card:nth-child(' + nextIndex + ')').addClass('now');
 
-			$('.right-btn').on('click', function() {
-				var unitWidth = $('.cards-rail').width();
-				var leftNow = parseInt($('.cards').css('left').replace('px', '')) || 0;
-				$('.cards').css('left', (leftNow - unitWidth) + 'px');
-			});
+						$('.left-btn, .right-btn').attr('disabled', true);
+						setTimeout(function() {
+							$('.left-btn, .right-btn').attr('disabled', false);
+						}, 600);
+					}
+					
+				});
+
+				$('.right-btn').on('click', function() {
+					// 更新now
+					var nowIndex = $('.cards .card').index($('.now'));
+					var nextIndex = nowIndex + 1;
+					if (nextIndex <= $('.cards').children().length - 1) {
+						var unitWidth = $('.cards-rail').width();
+						var leftNow = parseInt($('.cards').css('left').replace('px', '')) || 0;
+						$('.cards').css('left', (leftNow - unitWidth) + 'px');
+
+						
+						$('.now').removeClass('now');
+						$('.cards .card:nth-child(' + (nextIndex + 1) + ')').addClass('now');
+
+						$('.left-btn, .right-btn').attr('disabled', true);
+						setTimeout(function() {
+							$('.left-btn, .right-btn').attr('disabled', false);
+						}, 600);
+					}
+					
+				});
+			}
+			bindPageBtnEvent();
 		});
 
-		$.fn.cardsPlan = function(_opt) {
-			var that = this;
+			/*var that = this;
 			var default_opt = {
 				cardsRailTemplate:
 					'<div class="cards-rail">' +
@@ -346,82 +551,15 @@
 
 				$this.append($(opt.leftBtnTemplate));
 				$this.append($(opt.rightBtnTemplate));
-			});
-		}
-
-		/*$('.cards-plan').cardsPlan({
-			cardTemplate:
-				'<div class="card">' +
-					'<div class="card-title">' +
-						'<span>TITLE</span>' +
-						'<span class="del-btn pull-right"><i class="fa fa-close"></i></span>' +
-					'</div>' +
-					'<div class="card-content">' +
-						'<div class="droppable" data-drop-type="c">' +
-							'<h5>城市</h5>' +
-							'<div class="drop-content"></div>' +
-						'</div>' +
-						'<div class="droppable" data-drop-type="k">' +
-							'<h5>景点(n)</h5>' +
-							'<div class="drop-content"></div>' +
-						'</div>' +
-						'<div class="droppable" data-drop-type="r">' +
-							'<h5>酒店</h5>' +
-							'<div class="drop-content"></div>' +
-						'</div>' +
-					'</div>' +
-				'</div>'
-		});*/
-
-	</script>
+			});*/
+		// }
 
 
-
-
-	<!--
-	
 		// /////////////////////////////////////////////////////////////////////////////
 		// 拖拽
 		// /////////////////////////////////////////////////////////////////////////////
 
-	-->
-	<style>
-		.next-shining {
-			height: calc(100%);
-			animation: next-shining_border 1s infinite ease-in-out;
-			animation-fill-mode: both;
-		}
-		@keyframes next-shining_border{
-			50% {
-				background: rgba(255, 255, 0, 0.5);
-			}
-		}
-		.active-shining {
-			height: calc(100%);
-			animation: active-shining_border 0.7s infinite ease-in-out;
-			animation-fill-mode: both;
-		}
-		@keyframes active-shining_border{
-			50% {
-				background: rgba(0, 255, 0, 0.5);
-			}
-		}
-		.ng-shining {
-			height: calc(100%);
-			animation: ng-shining_border 1.7s infinite ease-in-out;
-			animation-fill-mode: both;
-		}
-		@keyframes ng-shining_border{
-			10% {
-				background: rgba(255, 0, 0, 0.2);
-			}
-			50% {
-				background: rgba(255, 0, 0, 0.2);
-			}
-		}
-	</style>
-	<script>
-		
+
 		// 初始化拖拽
 		function drag_init() {
 			// 可拖拽项目
@@ -446,7 +584,7 @@
 			// 随拖拽准备的数据
 			var type = $(ev.target).parent().attr('data-drag-type');
 			ev.dataTransfer.setData("id", ev.target.id);
-			ev.dataTransfer.setData("value", ev.target.getAttribute('data-value'));
+			ev.dataTransfer.setData("value", ev.target.getAttribute('key'));
 			ev.dataTransfer.setData("type", type);
 
 			// 可放置项目
@@ -460,6 +598,12 @@
 			$('[data-drop-type=' + type + ']').addClass('next-shining');
 		}
 
+		function ListAddToInput(value, $input) {
+			var ov = ($input.val() != "") ? $input.val().split(',') : [];
+			ov.push(value);
+			$input.val(ov.join(','));
+		}
+
 		// 扔下
 		function drop(evnet) {
 			console.log('drop');
@@ -471,7 +615,31 @@
 			var type = ev.dataTransfer.getData('type');
 
 			if ($(this).hasClass('active-shining')) {
-				$(this).find('.drop-content').append($('<div><i class="fa fa-circle"></i>[' + type + ']->' + value + 'TODO: 转换成可读信息</div>'));
+
+				var $input = $(this).find('input');
+				ListAddToInput(value, $input);
+
+				var cn = undefined;
+				switch (type) {
+					case 'c':
+						cn = data_city[value].cn;
+						break;
+					case 'k':
+						cn = data_kesiki[value].cn;
+						break;
+					case 'r':
+						cn = data_restaurant[value].cn;
+						break;
+				}
+
+				var $dropItem = $(
+					'<div class="drop-item">\n' +
+						'<i class="fa fa-circle"></i>\n' +
+						cn + '\n' +
+					'</div>'
+				);
+				$(this).find('.drop-content').append($dropItem);
+
 				$('[data-drag-type=' + type + '] [data-value=' + value + ']').hide();
 			}
 		}
@@ -502,8 +670,6 @@
 				$('.ng-shining').removeClass('ng-shining');
 			}
 		}
-
-		drag_init();
 	</script>
 </body>
 </html>
