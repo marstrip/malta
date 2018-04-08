@@ -104,6 +104,14 @@
 					<ul id="restaurant" data-drag-type="r">
 					</ul>
 				</div>
+				<div class="menu etc">
+					<h4>请拖选其他项</h4>
+					<ul id="restaurant" data-drag-type="o">
+						<li key="taxi">出租车</li>
+						<li key="guide">导游</li>
+						<li key="etc">其他费用</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 
@@ -125,51 +133,25 @@
 									<div class="droppable" data-drop-type="c">
 										<div class="drop-content">
 										</div>
-										<input type="text" name="select_city">
+										<input type="hidden" name="select_city">
 									</div>
 									<h5>景点(n)</h5>
 									<div class="droppable" data-drop-type="k">
 										<div class="drop-content">
 										</div>
-										<input type="text" name="select_kesiki">
+										<input type="hidden" name="select_kesiki">
 									</div>
 									<h5>酒店</h5>
 									<div class="droppable" data-drop-type="r">
 										<div class="drop-content">
 										</div>
-										<input type="text" name="select_restaurant">
+										<input type="hidden" name="select_restaurant">
 									</div>
-								</div>
-							</div>
-						</div>
-
-
-						<div class="card">
-							<div class="card-title">
-								<span>2018/04/07 行程</span>
-								<span class="del-btn pull-right">
-									<i class="fa fa-close"></i>
-								</span>
-							</div>
-							<div class="psb-container psb-here card-content">
-								<div class="psb-content">
-									<h5>城市</h5>
-									<div class="droppable" data-drop-type="c">
+									<h5>其他</h5>
+									<div class="droppable" data-drop-type="o">
 										<div class="drop-content">
 										</div>
-										<input type="text" name="select_city">
-									</div>
-									<h5>景点(n)</h5>
-									<div class="droppable" data-drop-type="k">
-										<div class="drop-content">
-										</div>
-										<input type="text" name="select_kesiki">
-									</div>
-									<h5>酒店</h5>
-									<div class="droppable" data-drop-type="r">
-										<div class="drop-content">
-										</div>
-										<input type="text" name="select_restaurant">
+										<input type="hidden" name="select_restaurant">
 									</div>
 								</div>
 							</div>
@@ -275,8 +257,8 @@
 		}
 		.drop-item {
 			margin: 10px;
-			width: 100px;
-			display: inline-block;
+			/*width: 100px;
+			display: inline-block;*/
 		}
 
 		.left-btn,
@@ -446,7 +428,7 @@
 			}
 			// leftUpdate();
 
-			setInterval(leftUpdate, 1000);
+			setInterval(leftUpdate, 16);
 
 			// 拖拽初始化
 			drag_init();
@@ -620,24 +602,79 @@
 				ListAddToInput(value, $input);
 
 				var cn = undefined;
-				switch (type) {
-					case 'c':
-						cn = data_city[value].cn;
-						break;
-					case 'k':
-						cn = data_kesiki[value].cn;
-						break;
-					case 'r':
-						cn = data_restaurant[value].cn;
-						break;
+				var $dropItem = undefined;
+
+				if (type == 'o') {
+					switch (value) {
+						case "taxi":
+							$dropItem = $(
+								'<div class="drop-item">\n' +
+									'<label for="taxi" title="(TODO:根据所在城市加载)">车行</label>\n' +
+									'<select name="taxi" style="width: 80px" title="(TODO:根据所在城市加载)">\n' +
+										'<option value="ch1">车行A</option>\n' +
+										'<option value="ch2">车行B</option>\n' +
+										'<option value="ch3">车行C</option>\n' +
+									'</select>\n' +
+										
+									'&nbsp;<label for="taxi_distance">距离</label>\n' +
+									'<input type="number" name="taxi_distance" style="width: 50px" />' +
+									'&nbsp;<label for="taxi_price">总价</label>\n' +
+									'<input type="number" name="taxi_price" style="width: 50px" />\n' +
+								'</div>'
+							);
+							break;
+						case "guide":
+							$dropItem = $(
+								'<div class="drop-item">\n' +
+									'<label for="guide" title="(TODO:根据设定条件加载)">导游</label>\n' +
+									'<select name="guide" style="width: 80px" title="(TODO:根据设定条件加载)">\n' +
+										'<option value="g1">导游A</option>\n' +
+										'<option value="g2">导游B</option>\n' +
+										'<option value="g3">导游C</option>\n' +
+									'</select>\n' +
+										
+									'&nbsp;<label for="guide_distance">距离</label>\n' +
+									'<input type="number" name="guide_distance" style="width: 50px" />' +
+									'&nbsp;<label for="guide_distance">参数</label>\n' +
+									'<input type="number" name="guide_param" style="width: 50px" />' +
+									'&nbsp;<label for="guide_price">总价</label>\n' +
+									'<input type="number" name="guide_price" style="width: 50px" />\n' +
+								'</div>'
+							);
+							break;
+						case "etc":
+							$dropItem = $(
+								'<div class="drop-item">\n' +
+									'<label for="etc_price">费用</label>\n' +
+									'<input type="number" name="etc_price" style="width: 80px" />\n' +
+								'</div>'
+							);
+							break;
+					}
+				}
+				else {
+					switch (type) {
+						case 'c':
+							cn = data_city[value].cn;
+							break;
+						case 'k':
+							cn = data_kesiki[value].cn;
+							break;
+						case 'r':
+							cn = data_restaurant[value].cn;
+							break;
+					}
+
+					$dropItem = $(
+						'<div class="drop-item">\n' +
+							'<i class="fa fa-circle"></i>\n' +
+							cn + '\n' +
+						'</div>'
+					);
+
+					// TODO: delete
 				}
 
-				var $dropItem = $(
-					'<div class="drop-item">\n' +
-						'<i class="fa fa-circle"></i>\n' +
-						cn + '\n' +
-					'</div>'
-				);
 				$(this).find('.drop-content').append($dropItem);
 
 				$('[data-drag-type=' + type + '] [data-value=' + value + ']').hide();
