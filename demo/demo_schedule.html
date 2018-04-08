@@ -157,6 +157,43 @@
 							</div>
 						</div>
 
+						<div class="card">
+							<div class="card-title">
+								<span>2018/04/08 行程</span>
+								<span class="del-btn pull-right">
+									<i class="fa fa-close"></i>
+								</span>
+							</div>
+							<div class="psb-container psb-here card-content">
+								<div class="psb-content">
+									<h5>城市</h5>
+									<div class="droppable" data-drop-type="c">
+										<div class="drop-content">
+										</div>
+										<input type="hidden" name="select_city">
+									</div>
+									<h5>景点(n)</h5>
+									<div class="droppable" data-drop-type="k">
+										<div class="drop-content">
+										</div>
+										<input type="hidden" name="select_kesiki">
+									</div>
+									<h5>酒店</h5>
+									<div class="droppable" data-drop-type="r">
+										<div class="drop-content">
+										</div>
+										<input type="hidden" name="select_restaurant">
+									</div>
+									<h5>其他</h5>
+									<div class="droppable" data-drop-type="o">
+										<div class="drop-content">
+										</div>
+										<input type="hidden" name="select_restaurant">
+									</div>
+								</div>
+							</div>
+						</div>
+
 						<!-- <div class="card">
 							<div class="card-title">
 								<span>New</span>
@@ -260,6 +297,21 @@
 			/*width: 100px;
 			display: inline-block;*/
 		}
+		.btn-circle {
+			background: transparent;
+			border: none;
+			border-radius: 10px;
+			width: 18px;
+			height: 18px;
+			display: none;
+			color: #aaa;
+		}
+		.drop-item:hover .btn-circle {
+			display: initial;
+		}
+		.btn-circle:hover {
+			color: red;
+		}
 
 		.left-btn,
 		.right-btn {
@@ -332,14 +384,116 @@
 		$(document).ready(function() {
 			console.log('ready');
 
-			var data = undefined;
+			/*var data = undefined;
 			$.ajax({
 				url: "data.json",
 				async: false,
 				success: function(d) {
 					data = d;
 				}
-			});
+			});*/
+
+			var data = {
+				"city": {
+					"beijing": {
+						"cn": "北京"
+					},
+					"tianjin": {
+						"cn": "天津"
+					},
+					"shanghai": {
+						"cn": "上海"
+					}
+				},
+				"kesiki": {
+					"tiananmen": {
+						"cn": "天安门"
+					},
+					"beihai": {
+						"cn": "北海"
+					},
+					"jingshan": {
+						"cn": "景山"
+					},
+					"tianjinzhiyan": {
+						"cn": "天津之眼"
+					},
+					"dongwuyuan": {
+						"cn": "动物园"
+					},
+					"binghairuanjianyuan": {
+						"cn": "滨海软件园"
+					},
+					"jd1": {
+						"cn": "景点1"
+					},
+					"jd2": {
+						"cn": "景点2"
+					},
+					"jd3": {
+						"cn": "景点3"
+					}
+				},
+				"restaurant": {
+					"beijingdafandian": {
+						"cn": "北京大饭店"
+					},
+					"quanjude": {
+						"cn": "全聚德"
+					},
+					"beihaichuanba": {
+						"cn": "北海串吧"
+					},
+					"xiachixiashuan": {
+						"cn": "虾吃虾涮"
+					},
+					"emaela": {
+						"cn": "e麻e辣"
+					},
+					"fd1": {
+						"cn": "饭店1"
+					},
+					"fd2": {
+						"cn": "饭店2"
+					},
+					"fd3": {
+						"cn": "饭店3"
+					}
+				},
+				"kesikiMap": {
+					"beijing": [
+						"tiananmen",
+						"beihai",
+						"jingshan"
+					],
+					"tianjin": [
+						"tianjinzhiyan",
+						"dongwuyuan",
+						"binhairuanjianyuan"
+					],
+					"shanghai": [
+						"jd1",
+						"jd2",
+						"jd3"
+					]
+				},
+				"restaurantMap": {
+					"beijing": [
+						"beijingdafandian",
+						"quanjude",
+						"beihaichuanba"
+					],
+					"tianjin": [
+						"xiachixiashuan",
+						"emaela"
+					],
+					"shanghai": [
+						"fd1",
+						"fd2",
+						"fd3"
+					]
+				}
+			};
 
 			var $city = $('#city');
 			var $kesiki = $('#kesiki');
@@ -373,9 +527,9 @@
 				return ($target.val() != "" ? $target.val().split(',') : []);
 			}
 
-			Object.prototype.listAdd = function(vList) {
+			var listAdd = function(vList, arr) {
 				for(var i = 0; i < vList.length; i++) {
-					this.push(vList[i]);
+					arr.push(vList[i]);
 				}
 			}
 
@@ -398,7 +552,7 @@
 					var allowList = [];
 					$.each(selectCity, function(idx) {
 						var c = selectCity[idx];
-						allowList.listAdd(data_kesikiMap[c]);
+						listAdd(data_kesikiMap[c], allowList);
 					});
 
 					if (getValueList($('.now [name=select_' + key + ']')).indexOf($item.attr('key')) == -1 && allowList.indexOf($item.attr('key')) != -1) {
@@ -416,7 +570,7 @@
 					var allowList = [];
 					$.each(selectCity, function(idx) {
 						var c = selectCity[idx];
-						allowList.listAdd(data_restaurantMap[c]);
+						listAdd(data_restaurantMap[c], allowList);
 					});
 
 					if (getValueList($('.now [name=select_' + key + ']')).indexOf($item.attr('key')) == -1 && allowList.indexOf($item.attr('key')) != -1) {
@@ -428,7 +582,8 @@
 			}
 			// leftUpdate();
 
-			setInterval(leftUpdate, 16);
+			window.leftUpdate = leftUpdate;
+			window.timeTask = setInterval(leftUpdate, 16);
 
 			// 拖拽初始化
 			drag_init();
@@ -456,8 +611,10 @@
 						var leftNow = parseInt($('.cards').css('left').replace('px', '')) || 0;
 						$('.cards').css('left', (leftNow + unitWidth) + 'px');
 						
+						clearInterval(window.timeTask);
 						$('.now').removeClass('now');
-						$('.cards .card:nth-child(' + nextIndex + ')').addClass('now');
+						$('.cards .card:nth-child(' + (nextIndex + 1) + ')').addClass('now');
+						window.timeTask = setInterval(window.leftUpdate, 16);
 
 						$('.left-btn, .right-btn').attr('disabled', true);
 						setTimeout(function() {
@@ -477,8 +634,10 @@
 						$('.cards').css('left', (leftNow - unitWidth) + 'px');
 
 						
+						clearInterval(window.timeTask);
 						$('.now').removeClass('now');
 						$('.cards .card:nth-child(' + (nextIndex + 1) + ')').addClass('now');
+						window.timeTask = setInterval(window.leftUpdate, 16);
 
 						$('.left-btn, .right-btn').attr('disabled', true);
 						setTimeout(function() {
@@ -585,6 +744,16 @@
 			ov.push(value);
 			$input.val(ov.join(','));
 		}
+		function ListMinusToInput(value, $input) {
+			var ov = ($input.val() != "") ? $input.val().split(',') : [];
+			var rmidx = ov.indexOf(value);
+			console.log('ov1:', ov.length, ov.join(','));
+			if (rmidx != -1) {
+				ov.splice(rmidx, 1);
+			}
+			console.log('ov2:', ov.length, ov.join(','));
+			$input.val(ov.join(','));
+		}
 
 		// 扔下
 		function drop(evnet) {
@@ -666,14 +835,30 @@
 					}
 
 					$dropItem = $(
-						'<div class="drop-item">\n' +
+						'<div class="drop-item" value="' + value + '">\n' +
 							'<i class="fa fa-circle"></i>\n' +
 							cn + '\n' +
 						'</div>'
 					);
-
-					// TODO: delete
 				}
+
+				var $removeBtn = $(
+					'<button class="btn-circle">' +
+						'<i class="fa fa-close"></i>' +
+					'</button>'
+				);
+
+				$dropItem.append($removeBtn);
+
+				$removeBtn.on('click', function() {
+					var $this = $(this);
+					var v = $this.closest('.drop-item').attr('value');
+					if (v !== undefined) {
+						var $input = $this.closest('.drop-content').next();
+						ListMinusToInput(v, $input);
+					}
+					$this.closest('.drop-item').remove();
+				});
 
 				$(this).find('.drop-content').append($dropItem);
 
